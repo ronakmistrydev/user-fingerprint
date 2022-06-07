@@ -1,14 +1,13 @@
 import { Controller, Get, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { lookup } from 'geoip-lite';
+import requestIp from 'request-ip';
 
 @Controller()
 export class AppController {
   @Get()
   appHandler(@Req() request: Request): Record<string, string | number | any> {
-    const initialIpAddress = request.header('x-forwarded-for') || request.socket.remoteAddress);
-    const ipAddress = initialIpAddress.toString().replace('::ffff:', '').trim();
-
+    const ipAddress = requestIp.getClientIp(request);
     const enhancedData = lookup(ipAddress);
 
     if (enhancedData) {
