@@ -5,6 +5,6 @@ import { Request } from 'express';
 export class AppController {
   @Get()
   appHandler(@Req() request: Request): string {
-    return request.socket.localAddress;
+    return request.ip;
   }
 }
