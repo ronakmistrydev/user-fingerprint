@@ -1,9 +1,10 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
+import { Request } from 'express';
 
 @Controller()
 export class AppController {
   @Get()
-  getHello(): string {
-    return 'Hello World';
+  appHandler(@Req() request: Request): string {
+    return request.socket.localAddress;
   }
 }
