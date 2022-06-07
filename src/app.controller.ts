@@ -30,7 +30,8 @@ export class AppController {
     if (userAgent) {
       const uaParser = new UAParser();
       uaParser.setUA(userAgent);
-      const enhancedUserAgent = uaParser.getResult();
+      const { ua, ...enhancedUserAgent } = uaParser.getResult();
+
       responsePayload = {
         ...responsePayload,
         ...enhancedUserAgent,
