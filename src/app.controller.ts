@@ -30,11 +30,26 @@ export class AppController {
     if (userAgent) {
       const uaParser = new UAParser();
       uaParser.setUA(userAgent);
-      const { ua, ...enhancedUserAgent } = uaParser.getResult();
-
+      const enhancedUserAgent = uaParser.getResult();
       responsePayload = {
         ...responsePayload,
-        ...enhancedUserAgent,
+        browser: {
+          name: enhancedUserAgent.browser.name,
+          version: enhancedUserAgent.browser.version,
+        },
+        engine: {
+          name: enhancedUserAgent.engine.name,
+          version: enhancedUserAgent.engine.version,
+        },
+        os: {
+          name: enhancedUserAgent.os.name,
+          version: enhancedUserAgent.os.name,
+        },
+        device: {
+          type: enhancedUserAgent.device.type,
+          model: enhancedUserAgent.device.model,
+          vendor: enhancedUserAgent.device.vendor,
+        },
         userAgent,
       };
     }
