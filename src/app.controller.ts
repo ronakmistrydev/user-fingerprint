@@ -10,19 +10,19 @@ export class AppController {
   appHandler(@Req() request: Request): Record<string, string | number | any> {
     let responsePayload: Record<string, string | number | any> = {};
     const ipAddress = getClientIp(request);
-    const enhancedData = lookup(ipAddress);
+    const enhancedIpAddress = lookup(ipAddress);
     const userAgent = request.get('User-Agent') || null;
 
-    if (enhancedData) {
+    if (enhancedIpAddress) {
       responsePayload = {
         ...responsePayload,
-        country: enhancedData.country,
-        region: enhancedData.region,
-        city: enhancedData.city,
-        timezone: enhancedData.timezone,
+        country: enhancedIpAddress.country,
+        region: enhancedIpAddress.region,
+        city: enhancedIpAddress.city,
+        timezone: enhancedIpAddress.timezone,
         location: {
-          lat: enhancedData.ll[0],
-          lng: enhancedData.ll[1],
+          lat: enhancedIpAddress.ll[0],
+          lng: enhancedIpAddress.ll[1],
         },
       };
     }
