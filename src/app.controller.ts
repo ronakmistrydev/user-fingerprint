@@ -1,6 +1,6 @@
 import { Controller, Get, Req } from '@nestjs/common';
 import { Request } from 'express';
-import geoIp from 'geoip-lite';
+import { lookup } from 'geoip-lite';
 
 @Controller()
 export class AppController {
@@ -8,12 +8,12 @@ export class AppController {
   appHandler(@Req() request: Request): Record<string, string | number | any> {
     const ipAddress = request.ip.toString().replace('::ffff:', '').trim();
 
-    const lookup = geoIp.lookup(ipAddress);
+    const enhancedData = lookup(ipAddress);
 
-    if (lookup) {
+    if (enhancedData) {
       return {
         ipAddress,
-        ...lookup,
+        ...enhancedData,
       };
     }
 
