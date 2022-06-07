@@ -6,12 +6,8 @@ import { lookup } from 'geoip-lite';
 export class AppController {
   @Get()
   appHandler(@Req() request: Request): Record<string, string | number | any> {
-    console.log('Remote address', request.socket.remoteAddress);
-    console.log('Local address', request.socket.localAddress);
-
-    console.log('Mixed --- ', request.header('x-forwarded-for') || request.socket.remoteAddress);
-
-    const ipAddress = request.ip.toString().replace('::ffff:', '').trim();
+    const initialIpAddress = request.header('x-forwarded-for') || request.socket.remoteAddress);
+    const ipAddress = initialIpAddress.toString().replace('::ffff:', '').trim();
 
     const enhancedData = lookup(ipAddress);
 
